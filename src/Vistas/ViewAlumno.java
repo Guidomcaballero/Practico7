@@ -6,6 +6,8 @@
 package Vistas;
 
 import caballero.practico7.*;
+import java.util.HashSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -166,10 +168,33 @@ public class ViewAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        Alumno a = new Alumno();
-        a.setLegajo(Integer.valueOf(jtLegajo.getText()));
-        a.setNombre(jtNombre.getText());
-        a.setApellido(jtApellido.getText());
+        int i=0;
+        String s="", t=""; 
+        boolean eLanza =false;
+        try{
+            i = Integer.valueOf(jtLegajo.getText());
+            s = jtNombre.getText();
+            t = jtApellido.getText();
+        }catch(Exception e){
+            eLanza=true;
+        }
+        if(!eLanza){
+            if(!ViewPrincipal.buscaAlumno(i)){
+            HashSet<Alumno> as = ViewPrincipal.getAlumnos();
+                Alumno a = new Alumno(i,s,t);
+                as.add(a);
+                ViewPrincipal.setAlumnos(as);
+                jbNuevoActionPerformed(evt);
+                JOptionPane.showMessageDialog(null,"El alumno fue guardado con exito!");
+            }else{
+                JOptionPane.showMessageDialog(null, "El numero de legajo que ingresó ya pertenece a un alumno en el sistema.");
+                jtLegajo.setText("");
+                jtNombre.setText("");
+                jtApellido.setText("");
+            }
+        }else
+            JOptionPane.showMessageDialog(null,"Por favor verifique los datos proporcionados.");
+        
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 

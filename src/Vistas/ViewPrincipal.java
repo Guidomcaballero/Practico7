@@ -7,6 +7,8 @@ package Vistas;
 
 import caballero.practico7.*;
 import java.util.HashSet;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +32,56 @@ public class ViewPrincipal extends javax.swing.JFrame {
     public static void setAlumnos(HashSet<Alumno> a) {
         ViewPrincipal.alumnos = a;
     }
+    
+    public static boolean buscaAlumno(int legajo){
+        boolean aux = false;
+        Iterator <Alumno> it = alumnos.iterator(); 
+        while(it.hasNext()){
+            if(it.next().getLegajo()==legajo){
+                aux = true;
+            }
+        }
+        return aux;
+    }
+    public static boolean buscaMateria(int id){
+        boolean aux = false;
+        Iterator <Materia> it = materias.iterator(); 
+        while(it.hasNext()){
+            if(it.next().getIdMateria()==id){
+                aux = true;
+            }
+        }
+        return aux;
+    }
+    
+    public static Alumno buscaANombre(String n){
+        Alumno a = new Alumno();
+        Iterator <Alumno> it = alumnos.iterator(); 
+        if(!it.hasNext()){
+            Alumno aux = it.next();
+            if((aux.getNombre()+", "+aux.getApellido()).equals(n))
+                a = aux;
+        }else{
+            while(it.hasNext()){
+                Alumno aux = it.next();
+                if((aux.getNombre()+", "+aux.getApellido()).equals(n))
+                    a = aux;
+        }
+        }
+        return a;
+    }
+    public static Materia buscaMNombre(String n){
+        Materia m = new Materia();
+        Iterator <Materia> it = materias.iterator(); 
+        while(it.hasNext()){
+            Materia aux = it.next();
+            if(aux.toString().equals(n)){
+                m = aux;
+            }
+        }
+        return m;
+    }
+    
     
     /**
      * Creates new form ViewPrincipal
@@ -149,12 +201,17 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jDesktopPane1.moveToFront(vm);
     }//GEN-LAST:event_jmNewMateriaActionPerformed
     private void jmInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmInscripcionActionPerformed
-        jDesktopPane1.removeAll();
-        jDesktopPane1.repaint();
-        ViewInscripcion vi = new ViewInscripcion();
-        vi.setVisible(true);
-        jDesktopPane1.add(vi);
-        jDesktopPane1.moveToFront(vi);
+        if(alumnos.isEmpty()||materias.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Aun no ha cargado la cantidad necesaria de alumnos o materias.");
+        }else{
+            jDesktopPane1.removeAll();
+            jDesktopPane1.repaint();
+            ViewInscripcion vi = new ViewInscripcion();
+            vi.setVisible(true);
+            jDesktopPane1.add(vi);
+            jDesktopPane1.moveToFront(vi);
+        }
+        System.out.println(alumnos.toString());
     }//GEN-LAST:event_jmInscripcionActionPerformed
 
     /**

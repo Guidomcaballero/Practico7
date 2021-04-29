@@ -61,7 +61,7 @@ public class Alumno {
     public int cantidadMaterias(){
         return this.materias.size();
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -84,6 +84,10 @@ public class Alumno {
             return false;
         }
         return true;
+    }
+    @Override
+    public String toString() {
+        return (apellido + ", " + nombre);
     }
    
 }
